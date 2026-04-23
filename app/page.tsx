@@ -48,11 +48,15 @@ export default function QuoteGenerator() {
   }, [])
 
   // Save to localStorage on changes
-  useEffect(() => {
-    if (isLoaded) {
-      saveToLocalStorage({ company, client, rows, terms })
-    }
-  }, [company, client, rows, terms, isLoaded])
+// useEffect(() => {
+//   if (!isLoaded) return
+
+//   const timeout = setTimeout(() => {
+//     saveToLocalStorage({ company, client, rows, terms })
+//   }, 800) // podés bajar a 300 si querés más responsive
+
+//   return () => clearTimeout(timeout)
+// }, [company, client, rows, terms, isLoaded])
 
   const handleExport = () => {
     window.print()
