@@ -2,6 +2,7 @@ export interface QuoteItem {
   id: string
   description: string
   price: number
+  isDraft?: boolean 
 }
 
 export interface SubtotalRow {

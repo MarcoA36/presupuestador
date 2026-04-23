@@ -31,7 +31,7 @@ export function PrintLayout({ company, client, rows, terms }: PrintLayoutProps) 
           <div>
             <h1 className="text-2xl font-bold">{company.name || 'Tu Empresa'}</h1>
             {company.address && <p className="text-sm mt-1">{company.address}</p>}
-            {company.phone && <p className="text-sm">{company.phone}</p>}
+            {company.phone && <p className="text-sm">{company.phone}Datos</p>}
             {company.email && <p className="text-sm">{company.email}</p>}
           </div>
         </div>

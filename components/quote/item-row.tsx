@@ -1,66 +1,97 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Trash2, Plus } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import type { QuoteItem } from '@/lib/quote-types'
 
 interface ItemRowProps {
   item: QuoteItem
   onChange: (item: QuoteItem) => void
   onRemove: () => void
-  isNewItem?: boolean // true for the last item being edited, shows add button instead of delete
-  onAddItem?: () => void
 }
 
-export function ItemRow({ item, onChange, onRemove, isNewItem, onAddItem }: ItemRowProps) {
+export function ItemRow({ item, onChange, onRemove }: ItemRowProps) {
+  const [isFocused, setIsFocused] = useState(false)
+
+  // Formateador compacto
+  const compactFormatter = new Intl.NumberFormat('es-AR', {
+    notation: 'compact',
+    maximumFractionDigits: 1,
+  })
+
+  // Condición de formateo
+  const shouldFormat =
+    !isFocused &&
+    typeof item.price === 'number' &&
+    item.price >= 100_000
+
+  // Valor mostrado
+  const displayValue = isFocused
+    ? item.price || ''
+    : shouldFormat
+    ? compactFormatter.format(item.price)
+    : item.price || ''
+
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-      {/* Description - full width on mobile */}
-      <div className="flex-1">
-        <Input
+    <div className="flex items-center gap-2">
+
+      {/* Descripción */}
+      <div className="flex-1 min-w-0">
+        {/* <Input
           value={item.description}
-          onChange={(e) => onChange({ ...item, description: e.target.value })}
-          placeholder="Descripcion del articulo"
+          onChange={(e) =>
+            onChange({ ...item, description: e.target.value })
+          }
+          placeholder="Descripcion"
+          className="border-0 shadow-none focus-visible:ring-0 px-0 truncate"
+        /> */}
+        <Input
+  value={item.description}
+  title={item.description}
+  onChange={(e) =>
+    onChange({ ...item, description: e.target.value })
+  }
+  placeholder="Descripcion"
+  className="border-0 shadow-none focus-visible:ring-0 px-0 truncate"
+/>
+      </div>
+
+      {/* Precio */}
+      <div className="relative w-20 sm:w-24 shrink-0">
+        <span className="absolute left-1 top-1/2 -translate-y-1/2 text-muted-foreground">
+          $
+        </span>
+
+        <Input
+          type="text"
+          inputMode="decimal"
+          value={displayValue}
+            title={item.price ? item.price.toString() : ''}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onChange={(e) => {
+            const raw = e.target.value.replace(/[^0-9.]/g, '')
+            onChange({
+              ...item,
+              price: parseFloat(raw) || 0,
+            })
+          }}
+          placeholder="0.00"
+          className="text-right pl-4 pr-1 border-0 shadow-none focus-visible:ring-0"
         />
       </div>
-      {/* Price and action button */}
-      <div className="flex items-center gap-2">
-        <div className="relative flex-1 sm:flex-none sm:w-28">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
-          <Input
-            type="number"
-            min="0"
-            step="0.01"
-            value={item.price || ''}
-            onChange={(e) => onChange({ ...item, price: parseFloat(e.target.value) || 0 })}
-            placeholder="0.00"
-            className="text-right pl-7"
-          />
-        </div>
-        <div className="shrink-0">
-          {isNewItem ? (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={onAddItem}
-              className="text-primary hover:text-primary"
-              title="Agregar item"
-            >
-              <Plus className="w-4 h-4" />
-            </Button>
-          ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onRemove}
-              className="text-muted-foreground hover:text-destructive"
-            >
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          )}
-        </div>
-      </div>
+
+      {/* Eliminar */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={onRemove}
+        className="shrink-0 text-muted-foreground hover:text-destructive"
+      >
+        <Trash2 className="w-4 h-4" />
+      </Button>
     </div>
   )
 }

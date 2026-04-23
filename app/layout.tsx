@@ -7,9 +7,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Quote Generator - Create Professional Quotes',
-  description: 'A clean and modern quote generator for small businesses. Create, manage, and export professional quotes easily.',
-  generator: 'v0.app',
+  title: 'Presupuestos 2026',
+  description: 'Una manera sencilla y rapida de generar un presupuesto profesional y enviarlo.',
   icons: {
     icon: [
       {
@@ -36,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-amber-100">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

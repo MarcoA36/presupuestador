@@ -18,7 +18,7 @@ export function ClientSection({ client, onChange }: ClientSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <Card>
+    <Card className='p-0'>
       <Button
         variant="ghost"
         onClick={() => setIsExpanded(!isExpanded)}
