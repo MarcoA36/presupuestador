@@ -106,14 +106,14 @@ export default function QuoteGenerator() {
           <QuoteFooter terms={terms} onChange={setTerms} />
 
           {/* Live Preview */}
-          {showPreview && (
+          {/* {showPreview && (
             <QuotePreview
               company={company}
               client={client}
               rows={rows}
               terms={terms}
             />
-          )}
+          )} */}
 
           {/* Actions */}
           <QuoteActions onExport={handleExport} onReset={handleReset} />
