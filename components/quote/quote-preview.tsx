@@ -46,8 +46,8 @@ export function QuotePreview({ company, client, rows, terms }: QuotePreviewProps
               </div>
             </div>
             <div className="text-right">
-              <h2 className="text-xl font-bold">PRESUPUESTO</h2>
-              <p className="text-muted-foreground text-xs">
+              <h2 className="font-bold">PRESUPUESTO</h2>
+              <p className="text-muted-foreground">
                 Fecha: {new Date().toLocaleDateString('es-ES')}
               </p>
             </div>

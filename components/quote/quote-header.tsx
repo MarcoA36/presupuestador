@@ -70,38 +70,40 @@ export function QuoteHeader({ company, onChange }: QuoteHeaderProps) {
           {/* Company Info */}
           <div className="flex-1">
             <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Field className="md:col-span-2">
-                <FieldLabel>Nombre de la Empresa</FieldLabel>
-                <Input
-                  value={company.name}
-                  onChange={(e) => onChange({ ...company, name: e.target.value })}
-                  placeholder="Tu Empresa S.A."
-                  className="text-lg font-semibold"
-                />
-              </Field>
+          <Field className="md:col-span-2">
+  <Input
+    value={company.name}
+    onChange={(e) => onChange({ ...company, name: e.target.value })}
+    placeholder="Tu Empresa S.A."
+    className="text-lg font-semibold border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-primary"
+  />
+</Field>
               <Field>
-                <FieldLabel>Telefono</FieldLabel>
+                {/* <FieldLabel>Telefono</FieldLabel> */}
                 <Input
                   value={company.phone}
                   onChange={(e) => onChange({ ...company, phone: e.target.value })}
                   placeholder="+34 600 000 000"
+                  className='border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-primary'
                 />
               </Field>
               <Field>
-                <FieldLabel>Email</FieldLabel>
+                {/* <FieldLabel>Email</FieldLabel> */}
                 <Input
                   type="email"
                   value={company.email}
                   onChange={(e) => onChange({ ...company, email: e.target.value })}
                   placeholder="contacto@empresa.com"
+                  className='border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-primary'
                 />
               </Field>
               <Field className="md:col-span-2">
-                <FieldLabel>Direccion</FieldLabel>
+                {/* <FieldLabel>Direccion</FieldLabel> */}
                 <Input
                   value={company.address}
                   onChange={(e) => onChange({ ...company, address: e.target.value })}
                   placeholder="Calle Principal 123, Ciudad, 28001"
+                  className='border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-primary'
                 />
               </Field>
             </FieldGroup>

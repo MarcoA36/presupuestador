@@ -1,24 +1,24 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { FieldGroup, Field, FieldLabel } from '@/components/ui/field'
-import { Button } from '@/components/ui/button'
-import { User, ChevronDown, ChevronUp } from 'lucide-react'
-import type { ClientInfo } from '@/lib/quote-types'
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { FieldGroup, Field, FieldLabel } from "@/components/ui/field";
+import { Button } from "@/components/ui/button";
+import { User, ChevronDown, ChevronUp } from "lucide-react";
+import type { ClientInfo } from "@/lib/quote-types";
 
 interface ClientSectionProps {
-  client: ClientInfo
-  onChange: (client: ClientInfo) => void
+  client: ClientInfo;
+  onChange: (client: ClientInfo) => void;
 }
 
 export function ClientSection({ client, onChange }: ClientSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Card className='p-0'>
+    <Card className="p-0">
       <Button
         variant="ghost"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -36,27 +36,28 @@ export function ClientSection({ client, onChange }: ClientSectionProps) {
       </Button>
       {isExpanded && (
         <CardContent className="pt-0 pb-6">
-          <FieldGroup className="space-y-4">
+          <FieldGroup className="space-y-2">
             <Field>
               <FieldLabel>Nombre del Cliente</FieldLabel>
               <Input
                 value={client.name}
                 onChange={(e) => onChange({ ...client, name: e.target.value })}
                 placeholder="Nombre del cliente o empresa"
+                className="border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-foreground"
               />
             </Field>
             <Field>
-              <FieldLabel>Notas (Opcional)</FieldLabel>
-              <Textarea
+              <FieldLabel>Más datos</FieldLabel>
+              <Input
                 value={client.notes}
                 onChange={(e) => onChange({ ...client, notes: e.target.value })}
                 placeholder="Notas adicionales sobre el cliente o proyecto..."
-                rows={3}
+                className="border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-foreground"
               />
             </Field>
           </FieldGroup>
         </CardContent>
       )}
     </Card>
-  )
+  );
 }
