@@ -1,9 +1,72 @@
+// "use client";
+
+// import { useState } from "react";
+// import { Card, CardContent } from "@/components/ui/card";
+// import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
+// import { FieldGroup, Field, FieldLabel } from "@/components/ui/field";
+// import { Button } from "@/components/ui/button";
+// import { User, ChevronDown, ChevronUp } from "lucide-react";
+// import type { ClientInfo } from "@/lib/quote-types";
+
+// interface ClientSectionProps {
+//   client: ClientInfo;
+//   onChange: (client: ClientInfo) => void;
+// }
+
+// export function ClientSection({ client, onChange }: ClientSectionProps) {
+//   const [isExpanded, setIsExpanded] = useState(false);
+
+//   return (
+//     <Card className="p-0">
+//       <Button
+//         variant="ghost"
+//         onClick={() => setIsExpanded(!isExpanded)}
+//         className="w-full flex items-center justify-between px-6 py-4 h-auto hover:bg-muted/50"
+//       >
+//         <div className="flex items-center gap-2 text-lg font-semibold">
+//           <User className="w-5 h-5" />
+//           Datos del cliente
+//         </div>
+//         {isExpanded ? (
+//           <ChevronUp className="w-5 h-5 text-muted-foreground" />
+//         ) : (
+//           <ChevronDown className="w-5 h-5 text-muted-foreground" />
+//         )}
+//       </Button>
+//       {isExpanded && (
+//         <CardContent className="pt-0 pb-6">
+//           <FieldGroup className="space-y-2">
+//             <Field>
+//               <FieldLabel>Nombre del Cliente</FieldLabel>
+//               <Input
+//                 value={client.name}
+//                 onChange={(e) => onChange({ ...client, name: e.target.value })}
+//                 placeholder="Nombre del cliente o empresa"
+//                 className="border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-foreground"
+//               />
+//             </Field>
+//             <Field>
+//               <FieldLabel>Más datos</FieldLabel>
+//               <Input
+//                 value={client.notes}
+//                 onChange={(e) => onChange({ ...client, notes: e.target.value })}
+//                 placeholder="Notas adicionales sobre el cliente o proyecto..."
+//                 className="border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-foreground"
+//               />
+//             </Field>
+//           </FieldGroup>
+//         </CardContent>
+//       )}
+//     </Card>
+//   );
+// }
+
 "use client";
 
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { User, ChevronDown, ChevronUp } from "lucide-react";
@@ -17,23 +80,41 @@ interface ClientSectionProps {
 export function ClientSection({ client, onChange }: ClientSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const hasData = client.name || client.notes;
+
   return (
-    <Card className="p-0">
-      <Button
-        variant="ghost"
+    <Card className="p-0 overflow-hidden">
+      {/* HEADER */}
+      <div
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-6 py-4 h-auto hover:bg-muted/50"
+        className="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-muted/50 transition"
       >
-        <div className="flex items-center gap-2 text-lg font-semibold">
-          <User className="w-5 h-5" />
-          Datos del cliente
+        {/* LEFT */}
+        <div className="flex items-start gap-3">
+          <User className="w-5 h-5 mt-1" />
+
+          <div className="flex flex-col">
+     
+           <span className="font-semibold text-sm">
+              {client.name || "Cliente"}
+            </span>
+            {!isExpanded && (
+              <span className="text-xs text-muted-foreground">
+                Detalles del cliente
+              </span>
+            )}
+          </div>
         </div>
+
+        {/* RIGHT */}
         {isExpanded ? (
           <ChevronUp className="w-5 h-5 text-muted-foreground" />
         ) : (
           <ChevronDown className="w-5 h-5 text-muted-foreground" />
         )}
-      </Button>
+      </div>
+
+      {/* CONTENT */}
       {isExpanded && (
         <CardContent className="pt-0 pb-6">
           <FieldGroup className="space-y-2">
@@ -46,6 +127,7 @@ export function ClientSection({ client, onChange }: ClientSectionProps) {
                 className="border-0 border-b rounded-none shadow-none px-0 focus-visible:ring-0 focus-visible:border-foreground"
               />
             </Field>
+
             <Field>
               <FieldLabel>Más datos</FieldLabel>
               <Input

@@ -53,7 +53,7 @@ useEffect(() => {
 
   const timeout = setTimeout(() => {
     saveToLocalStorage({ company, client, rows, terms })
-  }, 800) // podés bajar a 300 si querés más responsive
+  }, 1500) // podés bajar a 300 si querés más responsive
 
   return () => clearTimeout(timeout)
 }, [company, client, rows, terms, isLoaded])
@@ -87,7 +87,7 @@ useEffect(() => {
 
   return (
     <>
-      <main className="min-h-screen bg-muted/30 py-8 px-4 print:hidden">
+      <main className="min-h-screen bg-muted/30 py-8 px-1 print:hidden">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Title */}
           <div className="text-center space-y-2">
