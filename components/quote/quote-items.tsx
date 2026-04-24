@@ -8,6 +8,7 @@ import { Package, Calculator, Trash2 } from "lucide-react";
 import { ItemRow } from "./item-row";
 import type { QuoteRow, QuoteItem } from "@/lib/quote-types";
 import { isSubtotalRow } from "@/lib/quote-types";
+import { useEffect, useRef } from "react";
 
 interface QuoteItemsProps {
   rows: QuoteRow[];
@@ -15,6 +16,11 @@ interface QuoteItemsProps {
 }
 
 export function QuoteItems({ rows, onChange }: QuoteItemsProps) {
+  const lastItemRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+  lastItemRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+}, [rows.length]);
   // 🧠 BASE: una sola función para todo
   const sumUntilLastSubtotal = (rows: QuoteRow[], endIndex: number) => {
     let sum = 0;
@@ -119,11 +125,17 @@ export function QuoteItems({ rows, onChange }: QuoteItemsProps) {
 
   return (
     <Card>
-      <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2s">
-          🗒 Articulos del Presupuesto
-        </CardTitle>
-      </CardHeader>
+     <CardHeader className="sticky top-0 z-10 bg-background pb-4 border-b">
+  <div className="flex items-center justify-between">
+    <CardTitle className="flex items-center gap-2">
+      🗒 Articulos del Presupuesto
+    </CardTitle>
+
+    <Button onClick={addItem} size="sm">
+      + Agregar
+    </Button>
+  </div>
+</CardHeader>
 
       <CardContent className="space-y-4">
         {/* Header */}
@@ -177,6 +189,7 @@ export function QuoteItems({ rows, onChange }: QuoteItemsProps) {
                     </div>
                   </div>
                 ) : (
+                  <div ref={index === rows.length - 1 ? lastItemRef : null}>
                   <ItemRow
                     item={row as QuoteItem}
                     onChange={(updated) => updateRow(index, updated)}
@@ -184,6 +197,7 @@ export function QuoteItems({ rows, onChange }: QuoteItemsProps) {
                     // isNewItem={index === lastItemIndex}
                     // onAddItem={addItem}
                   />
+                  </div>
                 )}
               </div>
             );
